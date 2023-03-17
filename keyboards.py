@@ -13,3 +13,4 @@ admin_panel = (
     .add(Text("Инквизиция"), color=KeyboardButtonColor.PRIMARY)
     .add(Text("Производственный фокус"), color=KeyboardButtonColor.PRIMARY)
 ).get_json()
+    
