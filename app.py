@@ -23,31 +23,7 @@ app = FastAPI()
 async def startup_function():
     logger.info("Setup server...")
 
-    # базированная многопоточность!
-    schedule.every(5).seconds.do(machine_units)
-
-    async def function_one():
-        while True:
-            await schedule.run_pending()
-            await asyncio.sleep(1)
-
-    async def function_two():
-        await bot.setup_webhook()
-
-    async def some_callback_one():
-        await function_one()
-
-    async def some_callback_two():
-        await function_two()
-
-    def between_callback_one():
-        asyncio.run(some_callback_one())
-        
-    def between_callback_two():
-        asyncio.run(some_callback_two())
-
-    threading.Thread(target=between_callback_one).start()
-    threading.Thread(target=between_callback_two).start()
+    await bot.setup_webhook()
 
 
 # обработчик POST-запросов
