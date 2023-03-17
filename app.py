@@ -2,7 +2,7 @@ import threading
 import asyncio
 import aioschedule as schedule
 from loguru import logger
-from bot import bot
+from vk_bot import bot
 from machines import machine_units
 from config import (
     SECRET_KEY,
