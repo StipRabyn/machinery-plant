@@ -104,3 +104,4 @@ async def list_txt(message: Message):
                              f"Истребители: {aviation['Истребитель']}",
 
                              attachment=photo)
+    
