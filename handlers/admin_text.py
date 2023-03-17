@@ -79,7 +79,9 @@ async def inquisition_txt(message: Message):
         async with Database(DB_URL) as db:
             keys = await db.keys()
             for key in keys:
-                await db.delete(key)
+                if key in ("Гражданская техника", "Бронетехника", "Военная авиация",
+                           "Боевые корабли", "Артиллерия"):
+                    await db.delete(key)
 
         await message.answer("✅ Успешно!")
     else:
