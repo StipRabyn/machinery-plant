@@ -84,3 +84,4 @@ async def inquisition_txt(message: Message):
         await message.answer("✅ Успешно!")
     else:
         await message.answer("⚠ Вы не являетесь администратором концерна!")
+    
