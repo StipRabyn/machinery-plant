@@ -1,6 +1,6 @@
 import random
 from database import Database
-from bot import bot
+from vk_bot import bot
 from config import (
     MACHINES,
     DB_URL,
