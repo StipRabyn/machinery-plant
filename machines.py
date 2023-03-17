@@ -55,3 +55,4 @@ async def machine_units():
             machine = random.choice(MACHINES['Гражданская техника'])
             await send_unit("гражданской техники", machine)
             await db.hincrby("Гражданская техника", machine, 1)
+    
