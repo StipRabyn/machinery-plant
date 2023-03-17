@@ -69,3 +69,4 @@ async def hashes(db):
                  "Трактор": 0}
 
         await db.hmset("Гражданская техника", civil)
+  
