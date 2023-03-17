@@ -7,7 +7,7 @@ from config import (
 from vkbottle.bot import (
     BotLabeler,
     Message)
-from api import (
+from vk_api import (
     uploader,
     image_handler)
 
