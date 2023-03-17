@@ -34,8 +34,20 @@ async def startup_function():
     async def function_two():
         await bot.setup_webhook()
 
-    threading.Thread(target=asyncio.run, args=(function_one,)).start()
-    threading.Thread(target=asyncio.run, args=(function_two,)).start()
+    async def some_callback_one():
+        await function_one()
+
+    async def some_callback_two():
+        await function_two()
+
+    def between_callback_one():
+        asyncio.run(some_callback_one())
+        
+    def between_callback_two():
+        asyncio.run(some_callback_two())
+
+    threading.Thread(target=between_callback_one).start()
+    threading.Thread(target=between_callback_two).start()
 
 
 # обработчик POST-запросов
@@ -56,4 +68,3 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
-    
