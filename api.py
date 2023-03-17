@@ -19,3 +19,4 @@ image_handler = BytesIO()
 callback = BotCallback(url=URL,
                        title="Негев",
                        secret_key=SECRET_KEY)
+    
