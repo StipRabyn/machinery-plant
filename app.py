@@ -34,8 +34,8 @@ async def startup_function():
     async def function_two():
         await bot.setup_webhook()
 
-    threading.Thread(target=asyncio.run, args=(function_one(),)).start()
-    threading.Thread(target=asyncio.run, args=(function_two(),)).start()
+    threading.Thread(target=asyncio.run, args=(function_one,)).start()
+    threading.Thread(target=asyncio.run, args=(function_two,)).start()
 
 
 # обработчик POST-запросов
