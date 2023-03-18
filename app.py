@@ -1,6 +1,7 @@
-import time
+import asyncio
 import aioschedule as schedule
 from loguru import logger
+from worker import async_worker
 from vk_bot import bot
 from machines import machine_units
 from config import (
@@ -21,14 +22,23 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup_function():
     logger.info("Setup server...")
-    await bot.setup_webhook()
 
     # базированный таймер!
-    # schedule.every(5).seconds.do(machine_units)
+    schedule.every(5).seconds.do(machine_units)
 
-    # while True:
-        # await schedule.run_pending()
-        # time.sleep(1)
+    @async_worker
+    async def webhook():
+        await bot.setup_webhook()
+        await asyncio.sleep(1)
+
+    @async_worker
+    async def times():
+        while True:
+            await schedule.run_pending()
+            await asyncio.sleep(1)
+
+    await webhook()
+    await times()
 
 
 # обработчик POST-запросов
