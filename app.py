@@ -27,7 +27,7 @@ async def startup_function():
 
 
 # обработчик POST-запросов
-@app.post("/pallas")
+@app.post("/")
 async def connection(req: Request, background_task: BackgroundTasks):
     event = await req.json()
 
