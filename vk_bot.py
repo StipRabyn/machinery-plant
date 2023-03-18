@@ -1,4 +1,4 @@
-from vkbottle.bot import Bot
+from vkbottle import Bot
 from handlers.common import common_labeler
 from handlers.admin_commands import admin_commands
 from handlers.admin_text import admin_text
