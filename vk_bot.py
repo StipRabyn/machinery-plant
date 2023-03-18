@@ -1,18 +1,19 @@
 from vkbottle import Bot
-from handlers.common import common_labeler
-from handlers.admin_commands import admin_commands
-from handlers.admin_text import admin_text
 from vk_api import (
     api,
     labeler,
     callback,
     state_dispenser)
+from handlers import (
+    common,
+    admin_commands,
+    admin_text)
 
 
 # labelers
-labeler.load(common_labeler)
-labeler.load(admin_commands)
-labeler.load(admin_text)
+labeler.load(common.common_labeler)
+labeler.load(admin_commands.admin_commands)
+labeler.load(admin_text.admin_text)
 
 
 # бот
