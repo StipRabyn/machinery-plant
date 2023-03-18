@@ -27,22 +27,14 @@ async def startup_function():
     schedule.every(5).seconds.do(machine_units)
 
     @async_worker
-    async def webhook():
-        await bot.setup_webhook()
-        await asyncio.sleep(1)
-       
-
-    @async_worker
     async def times():
         while True:
             await schedule.run_pending()
             await asyncio.sleep(1)
 
-    await webhook()
-    
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(times())
     asyncio.set_event_loop(asyncio.new_event_loop())
-    
-    await times()
 
 
 # обработчик POST-запросов
