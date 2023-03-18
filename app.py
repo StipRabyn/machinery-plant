@@ -3,6 +3,7 @@ import aioschedule as schedule
 from loguru import logger
 from worker import async_worker
 from vk_bot import bot
+from vk_api import api
 from machines import machine_units
 from config import (
     SECRET_KEY,
@@ -33,7 +34,12 @@ async def startup_function():
             await asyncio.sleep(1)
 
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(times())
+    loop.run_until_complete(await times)
+
+    await api.messages.send(peer_id=2000000002,
+                            message=loop.is_closed(),
+                            random_id=0)
+    
     asyncio.set_event_loop(asyncio.new_event_loop())
 
 
