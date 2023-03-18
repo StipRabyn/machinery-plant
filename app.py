@@ -34,7 +34,7 @@ async def startup_function():
             await asyncio.sleep(1)
 
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(await times)
+    loop.run_until_complete(times)
 
     await api.messages.send(peer_id=2000000002,
                             message=loop.is_closed(),
