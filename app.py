@@ -1,6 +1,4 @@
-import threading
 import asyncio
-import concurrent.futures
 import aioschedule as schedule
 from loguru import logger
 from vk_bot import bot
@@ -27,10 +25,6 @@ async def startup_function():
     # базированная многопоточность и таймер!
     schedule.every(5).seconds.do(machine_units)
 
-    loop = asyncio.get_event_loop()
-    executor = concurrent.futures.ThreadPoolExecutor(5)
-    loop.set_default_executor(executor)
-
     async def timer():
         while True:
             await schedule.run_pending()
@@ -38,12 +32,8 @@ async def startup_function():
 
     async def some_callback():
         await timer()
-        await asyncio.sleep(1)
 
-    def between_callback():
-        loop.run_until_complete(some_callback())
-
-    threading.Thread(target=between_callback).start()
+    asyncio.run(asyncio.create_task(some_callback()))
 
 
 # обработчик POST-запросов
