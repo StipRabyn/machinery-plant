@@ -1,6 +1,6 @@
 import random
 from database import Database
-from vk_bot import bot
+from vk_api import api
 from config import (
     MACHINES,
     DB_URL,
@@ -10,7 +10,7 @@ from config import (
 async def machine_units():
     # функция отправки сгенерированного юнита
     async def send_unit(type_unit, unit):
-        await bot.api.messages.send(peer_id=2000000002,
+        await api.messages.send(peer_id=2000000002,
                                     message=f"Произведена единица {type_unit}: {unit}",
                                     random_id=0)
 
