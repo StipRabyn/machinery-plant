@@ -1,5 +1,6 @@
 import asyncio
 import nest_asyncio
+import concurrent.futures
 import aioschedule as schedule
 from loguru import logger
 from worker import async_worker
@@ -28,21 +29,21 @@ async def startup_function():
     schedule.every(15).seconds.do(machine_units)
     nest_asyncio.apply()
 
-    @async_worker
     async def server():
         await bot.setup_webhook()
+        await asyncio.sleep(1)
 
-    @async_worker
     async def times():
         while True:
             await schedule.run_pending()
             await asyncio.sleep(1)
 
-    async def party():
-        await asyncio.gather(server(), times())
-
-    asyncio.run(party())
-    asyncio.set_event_loop(asyncio.new_event_loop())
+    def party():
+        with concurrent.futures.ThreadPoolExecutor(3) as executor:
+            executor.submit(asyncio.run, server)
+            executor.submit(asyncio.run, times)
+            
+    party()
 
 
 # обработчик POST-запросов
