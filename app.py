@@ -27,7 +27,7 @@ async def startup_function():
 
     # базированная многопоточность и таймер!
     schedule.every(5).seconds.do(machine_units)
-    
+
     loop = asyncio.get_event_loop()
     executor = concurrent.futures.ThreadPoolExecutor(5)
     loop.set_default_executor(executor)
@@ -49,9 +49,11 @@ async def startup_function():
 
     def between_callback_one():
         loop.run_until_complete(some_callback_one())
+        raise asyncio.CancelledError()
 
     def between_callback_two():
         loop.run_until_complete(some_callback_two())
+        raise asyncio.CancelledError()
 
     threading.Thread(target=between_callback_one).start()
     threading.Thread(target=between_callback_two).start()
@@ -77,3 +79,4 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
+    
