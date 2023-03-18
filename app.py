@@ -41,10 +41,16 @@ async def startup_function():
         await function_two()
 
     def between_callback_one():
-        asyncio.run(some_callback_one())
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(some_callback_one())
+        loop.close()
 
     def between_callback_two():
-        asyncio.run(some_callback_two())
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        loop.run_until_complete(some_callback_two())
+        loop.close()
 
     threading.Thread(target=between_callback_one).start()
     threading.Thread(target=between_callback_two).start()
@@ -68,5 +74,5 @@ async def connection(req: Request, background_task: BackgroundTasks):
             logger.info("Получено новое сообщение!")
             event['object']['message']['text'] = event['object']['message']['text'].lower()
             background_task.add_task(await bot.process_event(event))
-            
+
         return Response("ok")
