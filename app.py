@@ -1,4 +1,5 @@
 import asyncio
+import nest_asyncio
 import aioschedule as schedule
 from loguru import logger
 from worker import async_worker
@@ -26,6 +27,7 @@ async def startup_function():
 
     # базированный таймер!
     schedule.every(5).seconds.do(machine_units)
+    nest_asyncio.apply()
 
     @async_worker
     async def times():
@@ -34,12 +36,12 @@ async def startup_function():
             await asyncio.sleep(1)
 
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(times)
+    loop.run_until_complete(times())
 
     await api.messages.send(peer_id=2000000002,
                             message=loop.is_closed(),
                             random_id=0)
-    
+
     asyncio.set_event_loop(asyncio.new_event_loop())
 
 
