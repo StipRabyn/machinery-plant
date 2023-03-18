@@ -38,12 +38,10 @@ async def startup_function():
             await schedule.run_pending()
             await asyncio.sleep(1)
 
-    def party():
-        with concurrent.futures.ThreadPoolExecutor(3) as executor:
-            executor.submit(asyncio.run, server)
-            executor.submit(asyncio.run, times)
+    with concurrent.futures.ThreadPoolExecutor(3) as executor:
+        executor.submit(asyncio.run, server)
+        executor.submit(asyncio.run, times)
             
-    party()
 
 
 # обработчик POST-запросов
