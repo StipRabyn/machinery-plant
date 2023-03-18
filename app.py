@@ -25,9 +25,9 @@ async def startup_function():
     # базированный таймер!
     schedule.every(5).seconds.do(machine_units)
 
-    while True:
-        await schedule.run_pending()
-        time.sleep(1)
+    # while True:
+        # await schedule.run_pending()
+        # time.sleep(1)
 
 
 # обработчик POST-запросов
