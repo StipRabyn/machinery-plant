@@ -11,7 +11,7 @@ from config import (
 
 
 # инициализация
-api = API(token=TOKEN)
+api = API(TOKEN)
 labeler = BotLabeler()
 uploader = PhotoMessageUploader(api)
 image_handler = BytesIO()
