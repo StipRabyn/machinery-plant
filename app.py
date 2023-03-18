@@ -28,10 +28,10 @@ async def startup_function():
     # базированная многопоточность и таймер!
     schedule.every(5).seconds.do(machine_units)
     
-    nest_asyncio.apply()
     loop = asyncio.get_event_loop()
     executor = concurrent.futures.ThreadPoolExecutor(5)
     loop.set_default_executor(executor)
+    nest_asyncio.apply(loop)
 
     async def function_one():
         while True:
@@ -48,10 +48,10 @@ async def startup_function():
         await function_two()
 
     def between_callback_one():
-        loop.run_until_complete(some_callback_one())
+        await loop.run_until_complete(some_callback_one())
 
     def between_callback_two():
-        loop.run_until_complete(some_callback_two())
+        await loop.run_until_complete(some_callback_two())
 
     threading.Thread(target=between_callback_one).start()
     threading.Thread(target=between_callback_two).start()
