@@ -38,6 +38,7 @@ async def startup_function():
 
     async def some_callback():
         await timer()
+        await asyncio.sleep(1)
 
     def between_callback():
         loop.run_until_complete(some_callback())
