@@ -30,8 +30,7 @@ async def startup_function():
     async def webhook():
         await bot.setup_webhook()
         await asyncio.sleep(1)
-        
-    asyncio.set_event_loop(asyncio.new_event_loop())
+       
 
     @async_worker
     async def times():
@@ -40,6 +39,9 @@ async def startup_function():
             await asyncio.sleep(1)
 
     await webhook()
+    
+    asyncio.set_event_loop(asyncio.new_event_loop())
+    
     await times()
 
 
