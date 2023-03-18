@@ -24,18 +24,7 @@ app = FastAPI()
 async def startup_function():
     logger.info("Setup server...")
 
-    # базированный таймер!
-    schedule.every(5).seconds.do(machine_units)
-    nest_asyncio.apply()
-
-    @async_worker
-    async def times():
-        while True:
-            await schedule.run_pending()
-            await asyncio.sleep(1)
-
-    asyncio.run(times())
-    asyncio.set_event_loop(asyncio.new_event_loop())
+    
 
 
 # обработчик POST-запросов
