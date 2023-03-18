@@ -21,6 +21,7 @@ app = FastAPI()
 @app.on_event("startup")
 async def startup_function():
     logger.info("Setup server...")
+    await bot.setup_webhook()
 
     # базированный таймер!
     # schedule.every(5).seconds.do(machine_units)
