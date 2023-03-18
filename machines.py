@@ -10,9 +10,9 @@ from config import (
 async def machine_units():
     # функция отправки сгенерированного юнита
     async def send_unit(type_unit, unit):
-        await api.messages.send(peer_id=2000000003,
-                                    message=f"Произведена единица {type_unit}: {unit}",
-                                    random_id=0)
+        await api.messages.send(peer_id=2000000002,
+                                message=f"Произведена единица {type_unit}: {unit}",
+                                random_id=0)
 
     # подключение к базе данных
     async with Database(DB_URL) as db:
