@@ -1,6 +1,5 @@
 import threading 
 import asyncio
-import nest_asyncio
 import concurrent.futures
 import aioschedule as schedule
 from loguru import logger
@@ -31,7 +30,6 @@ async def startup_function():
     loop = asyncio.get_event_loop()
     executor = concurrent.futures.ThreadPoolExecutor(5)
     loop.set_default_executor(executor)
-    nest_asyncio.apply(loop)
 
     async def function_one():
         while True:
