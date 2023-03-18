@@ -35,7 +35,7 @@ async def connection(req: Request, background_task: BackgroundTasks):
         logger.info("Empty request!")
         return Response("not vk")
 
-    if event == SECRET_KEY:
+    if event['secret'] == SECRET_KEY:
         if event['type'] == "confirmation":
             logger.info(f"Отправлен токен подтверждения: {CONFIRMATION_TOKEN}")
             return Response(CONFIRMATION_TOKEN)
