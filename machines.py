@@ -10,7 +10,7 @@ from config import (
 async def machine_units():
     # функция отправки сгенерированного юнита
     async def send_unit(type_unit, unit):
-        await api.messages.send(peer_id=2000000003,
+        await api.messages.send(peer_id=2000000001,
                                 message=f"Произведена единица {type_unit}: {unit}",
                                 random_id=0)
 
