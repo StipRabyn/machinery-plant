@@ -1,6 +1,5 @@
 import threading
 import asyncio
-import nest_asyncio
 import concurrent.futures
 import aioschedule as schedule
 from loguru import logger
@@ -31,30 +30,19 @@ async def startup_function():
     loop = asyncio.get_event_loop()
     executor = concurrent.futures.ThreadPoolExecutor(5)
     loop.set_default_executor(executor)
-    nest_asyncio.apply(loop)
 
-    async def function_one():
+    async def timer():
         while True:
             await schedule.run_pending()
             await asyncio.sleep(1)
 
-    async def function_two():
-        await bot.setup_webhook()
+    async def some_callback():
+        await timer()
 
-    async def some_callback_one():
-        await function_one()
+    def between_callback():
+        loop.run_until_complete(some_callback())
 
-    async def some_callback_two():
-        await function_two()
-
-    def between_callback_one():
-        loop.run_until_complete(some_callback_one())
-
-    def between_callback_two():
-        loop.run_until_complete(some_callback_two())
-
-    threading.Thread(target=between_callback_one).start()
-    threading.Thread(target=between_callback_two).start()
+    threading.Thread(target=between_callback).start()
 
 
 # обработчик POST-запросов
@@ -77,3 +65,4 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
+    
