@@ -6,7 +6,7 @@ TOKEN = environ.get('TOKEN')
 CONFIRMATION_TOKEN = environ.get('CONFIRMATION_TOKEN')
 SECRET_KEY = environ.get('SECRET_KEY')
 URL = environ.get('URL')
-ADMIN = (environ.get('ADMIN_1'), environ.get('ADMIN_2'))
+ADMIN = (int(environ.get('ADMIN_1')), int(environ.get('ADMIN_2')))
 
 
 # база данных
