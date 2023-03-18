@@ -23,7 +23,7 @@ async def startup_function():
     logger.info("Setup server...")
 
     # базированный таймер!
-    schedule.every(5).seconds.do(machine_units)
+    # schedule.every(5).seconds.do(machine_units)
 
     # while True:
         # await schedule.run_pending()
