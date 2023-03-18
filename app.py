@@ -37,10 +37,11 @@ async def connection(req: Request, background_task: BackgroundTasks):
 
     if event == SECRET_KEY:
         if event['type'] == "confirmation":
+            logger.info(f"Отправлен токен подтверждения: {CONFIRMATION_TOKEN}")
             return Response(CONFIRMATION_TOKEN)
 
         elif event['type'] == "message_new":
             event['object']['message']['text'] = event['object']['message']['text'].lower()
             background_task.add_task(await bot.process_event(event))
             
-            return Response("ok")
+        return Response("ok")
