@@ -5,7 +5,8 @@ from handlers.admin_text import admin_text
 from vk_api import (
     api,
     labeler,
-    callback)
+    callback,
+    state_dispenser)
 
 
 # labelers
@@ -17,5 +18,6 @@ labeler.load(admin_text)
 # бот
 bot = Bot(api=api,
           callback=callback,
-          labeler=labeler)
+          labeler=labeler,
+          state_dispenser=state_dispenser)
     
