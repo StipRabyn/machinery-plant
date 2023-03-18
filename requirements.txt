@@ -1,8 +1,8 @@
+hypercorn
 fastapi
 aioredis
 aioschedule
 vkbottle
 loguru
 matplotlib
-uvicorn
   
