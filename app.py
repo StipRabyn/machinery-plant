@@ -1,4 +1,4 @@
-import asyncio
+import time
 import aioschedule as schedule
 from loguru import logger
 from vk_bot import bot
@@ -22,18 +22,12 @@ app = FastAPI()
 async def startup_function():
     logger.info("Setup server...")
 
-    # базированная многопоточность и таймер!
+    # базированный таймер!
     schedule.every(5).seconds.do(machine_units)
 
-    async def timer():
-        while True:
-            await schedule.run_pending()
-            await asyncio.sleep(1)
-
-    async def some_callback():
-        await timer()
-
-    asyncio.run(asyncio.create_task(some_callback()))
+    while True:
+        await schedule.run_pending()
+        time.sleep(1)
 
 
 # обработчик POST-запросов
@@ -56,4 +50,3 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
-    
