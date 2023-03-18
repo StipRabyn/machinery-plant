@@ -1,8 +1,8 @@
-hypercorn
-fastapi
-aioredis
-aioschedule
-vkbottle
-loguru
-matplotlib
+hypercorn==0.14.3
+fastapi==0.94.1
+aioredis==2.0.1
+aioschedule==0.5.2
+vkbottle==4.3.12
+loguru==0.6.0
+matplotlib==3.7.1
   
