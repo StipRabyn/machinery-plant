@@ -2,8 +2,7 @@ from vkbottle import Bot
 from vk_api import (
     api,
     labeler,
-    callback,
-    state_dispenser)
+    callback)
 from handlers import (
     common,
     admin_commands,
@@ -19,6 +18,5 @@ labeler.load(admin_text.admin_text)
 # бот
 bot = Bot(api=api,
           callback=callback,
-          labeler=labeler,
-          state_dispenser=state_dispenser)
+          labeler=labeler)
     
