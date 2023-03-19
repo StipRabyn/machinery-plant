@@ -1,6 +1,6 @@
 import asyncio
-import concurrent.futures
 import aioschedule as schedule
+from worker import async_worker
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
@@ -24,23 +24,16 @@ async def startup_function():
     logger.info("Setup server...")
 
     # базированный таймер!
-    # schedule.every(15).seconds.do(machine_units)
+    schedule.every(15).seconds.do(machine_units)
 
-    # async def server():
-        # await bot.setup_webhook()
-        # await asyncio.sleep(1)
+    @async_worker()
+    async def times():
+        while True:
+            await schedule.run_pending()
+            await asyncio.sleep(1)
 
-    # async def times():
-        # while True:
-            # await schedule.run_pending()
-            # await asyncio.sleep(1)
-
-    # def party():
-        # with concurrent.futures.ThreadPoolExecutor(3) as executor:
-            # executor.submit(asyncio.run, server)
-            # executor.submit(asyncio.run, times)
-
-    # party()
+    asyncio.run(times())
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 # обработчик POST-запросов
