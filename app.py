@@ -1,4 +1,5 @@
 import asyncio
+import nest_asyncio
 import aioschedule as schedule
 from worker import async_worker
 from loguru import logger
@@ -21,12 +22,13 @@ app = FastAPI()
 # запуск стартап-функции
 @app.on_event("startup")
 async def startup_function():
-    logger.info("Setup server...")
+    logger.info("Setup timer...")
 
     # базированный таймер!
     schedule.every(15).seconds.do(machine_units)
+    nest_asyncio.apply()
 
-    @async_worker()
+    @async_worker
     async def times():
         while True:
             await schedule.run_pending()
