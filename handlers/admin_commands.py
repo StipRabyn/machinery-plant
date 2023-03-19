@@ -17,21 +17,21 @@ admin_commands = BotLabeler()
 
 
 # фокус производства
-@admin_commands.private_message(CommandRule("фокус", ['/', '!', ''], 1))
+@admin_commands.message(CommandRule("фокус", ['/', '!', ''], 1))
 async def focus_command(message: Message, args: Tuple[str]):
     if message.from_id in ADMIN:
         async with Database(DB_URL) as db:
             # создания дефолтного ключа, если он не существует
             await db.setnx("focus", "2")
 
-            if args[0] == "1":
-                await db.set("focus", "1")
+            if args[0] == '1':
+                await db.set("focus", '1')
                 await message.answer("✅ Успешно!")
-            elif args[0] == "2":
-                await db.set("focus", "2")
+            elif args[0] == '2':
+                await db.set("focus", '2')
                 await message.answer("✅ Успешно!")
-            elif args[0] == "3":
-                await db.set("focus", "3")
+            elif args[0] == '3':
+                await db.set("focus", '3')
                 await message.answer("✅ Успешно!")
             else:
                 await message.answer("Да")
@@ -40,7 +40,7 @@ async def focus_command(message: Message, args: Tuple[str]):
 
 
 # восстановление техники
-@admin_commands.private_message(CommandRule("восстановить", ['/', '!', ''], 17))
+@admin_commands.message(CommandRule("восстановить", ['/', '!', ''], 17))
 async def recovery_command(message: Message, args: List[str]):
     if message.from_id in ADMIN:
         itr = 0
