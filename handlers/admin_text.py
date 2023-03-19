@@ -23,16 +23,16 @@ async def admin_txt(message: Message):
 
 
 # фокус производства
-@admin_text.private_message(text=['производственный фокус', 'производственный фокус', '/производственный фокус'])
+@admin_text.message(text=['производственный фокус', 'производственный фокус', '/производственный фокус'])
 async def focus_txt(message: Message):
     if message.from_id in ADMIN:
         async with Database(DB_URL) as db:
             await hashes(db)
             focus = await db.get("focus")
 
-            if focus == "1":
+            if focus == '1':
                 focus = "Военный"
-            elif focus == "2":
+            elif focus == '2':
                 focus = "Сбалансированный"
             else:
                 focus = "Гражданский"
