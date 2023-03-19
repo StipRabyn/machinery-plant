@@ -2,7 +2,7 @@ import asyncio
 import nest_asyncio
 import aioschedule as schedule
 from worker import async_worker
-from loguru import logger
+from loguru import logger 
 from vk_bot import bot
 from machines import machine_units
 from config import (
