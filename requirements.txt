@@ -1,4 +1,4 @@
-uvicorn==0.20.0
+uvicorn==0.21.1
 fastapi==0.94.1
 aioredis==2.0.1
 aioschedule==0.5.2
