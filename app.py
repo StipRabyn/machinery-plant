@@ -1,5 +1,4 @@
 import asyncio
-import nest_asyncio
 import concurrent.futures
 import aioschedule as schedule
 from loguru import logger
@@ -27,7 +26,6 @@ async def startup_function():
 
     # базированный таймер!
     schedule.every(15).seconds.do(machine_units)
-    nest_asyncio.apply()
 
     async def server():
         await bot.setup_webhook()
