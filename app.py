@@ -25,7 +25,7 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    schedule.every(15).seconds.do(machine_units)
+    schedule.every(60).minutes.do(machine_units)
     nest_asyncio.apply()
 
     @async_worker
