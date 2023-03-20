@@ -1,6 +1,7 @@
 import time
 import datetime
 import asyncio
+from random import choice
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
@@ -26,33 +27,37 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    
-    async def times():
+    async def timer():
         async with Database(DB_URL) as db:
+            # функция ключа для таймера
+            async def clock():
+                times = {"hour": int(time.strftime("%H", time.localtime())),
+                         "minutes": int(time.strftime("%M", time.localtime())) + 13}
+
+                await db.hmset("timer", times)
 
             # создание дефолтного ключа для таймера
             if "timer" not in await db.keys():
-                timer = {"hour": int(time.strftime("%H", time.localtime())) + 1,
-                         "minutes": int(time.strftime("%M", time.localtime()))}
-
-                await db.hmset("timer", timer)
+                await clock()
 
             # цикл таймера
             while True:
                 timerr = await db.hgetall("timer")
                 time_unit = datetime.time(int(timerr['hour']), int(timerr['minutes']))
-                time_now = datetime.time(int(time.strftime("%H", time.localtime())), 
+                time_now = datetime.time(int(time.strftime("%H", time.localtime())),
                                          int(time.strftime("%M", time.localtime())))
-                
+
                 if time_now >= time_unit:
-                    await machine_units()
-                    timer = {"hour": int(time.strftime("%H", time.localtime())) + 1,
-                             "minutes": int(time.strftime("%M", time.localtime()))}
-                    await db.hmset("timer", timer)
+                    if choice(tuple(range(1, 4))) == 1:
+                        await machine_units(2000000002)
+                        await clock()
+                    else:
+                        await machine_units(2000000001)
+                        await clock()
 
                 await asyncio.sleep(1)
 
-    asyncio.create_task(times())
+    asyncio.create_task(timer())
 
 
 # обработчик POST-запросов
