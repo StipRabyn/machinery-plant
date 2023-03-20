@@ -1,10 +1,13 @@
+import time
+import datetime
 import asyncio
 import nest_asyncio
-import aioschedule as schedule
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
+from database import Database
 from config import (
+    DB_URL,
     SECRET_KEY,
     CONFIRMATION_TOKEN)
 from fastapi import (
@@ -24,15 +27,30 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    schedule.every(80).minutes.do(machine_units)
-    nest_asyncio.apply()
     
-    async def timer():
-        while True:
-            await schedule.run_pending()
-            await asyncio.sleep(1)
-    
-    asyncio.create_task(timer())
+    async def times():
+        async with Database(DB_URL) as db:
+
+            # создание дефолтного ключа для таймера
+            if "timer" not in await db.keys():
+                timer = {"hour": int(time.strftime("H%", time.localtime())) + 1,
+                         "minutes": time.strftime("M%", time.localtime())}
+
+                await db.hmset("timer", timer)
+
+            # цикл таймера
+            while True:
+                timerr = await db.hgetall("timer")
+                time_unit = datetime.time(int(timerr['hour']), int(timerr['minutes']))
+                time_now = datetime.time(int(time.strftime("%H", time.localtime())), 
+                                         int(time.strftime("%M", time.localtime())))
+                
+                if time_now >= time_unit:
+                    await machine_units()
+
+                await asyncio.sleep(1)
+
+    asyncio.create_task(times())
 
 
 # обработчик POST-запросов
