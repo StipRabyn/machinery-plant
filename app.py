@@ -1,4 +1,6 @@
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+import asyncio
+import nest_asyncio
+import aioschedule as schedule
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
@@ -22,9 +24,19 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(await machine_units(), "interval", seconds=30)
-    scheduler.start()
+    logger.info("Setup timer...")
+
+    # базированный таймер!
+    schedule.every(60).minutes.do(machine_units)
+    nest_asyncio.apply()
+
+    async def times():
+        while True:
+            await schedule.run_pending()
+            await asyncio.sleep(1)
+    
+    asyncio.create_task(times())
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 # обработчик POST-запросов
