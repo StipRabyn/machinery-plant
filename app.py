@@ -1,5 +1,4 @@
-import time
-import aioschedule as schedule
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
@@ -23,11 +22,9 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    schedule.every(90).minutes.do(machine_units)
-
-    while True:
-        await schedule.run_pending()
-        time.sleep(1)
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(machine_units(), "interval", seconds=5400)
+    scheduler.start()
 
 
 # обработчик POST-запросов
