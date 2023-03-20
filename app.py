@@ -1,5 +1,4 @@
 import time
-import nest_asyncio
 import aioschedule as schedule
 from loguru import logger
 from vk_bot import bot
