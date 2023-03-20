@@ -1,6 +1,8 @@
-import time
+import asyncio
+import nest_asyncio
 import aioschedule as schedule
 from loguru import logger
+from worker import async_worker
 from vk_bot import bot
 from machines import machine_units
 from config import (
@@ -24,10 +26,17 @@ async def startup_function():
 
     # базированный таймер!
     schedule.every(60).minutes.do(machine_units)
-    
-    while True:
-        await schedule.run_pending()
-        time.sleep(1)
+    nest_asyncio.apply()
+
+    @async_worker
+    async def times():
+        while True:
+            await schedule.run_pending()
+
+    await asyncio.sleep(1)
+
+    asyncio.run(times())
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 # обработчик POST-запросов
