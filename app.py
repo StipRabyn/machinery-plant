@@ -28,26 +28,27 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    async def timer():
-        async with Database(DB_URL) as db:
-            # функция ключа для таймера
-            async def clock():
-                times = {"hour": int(time.strftime("%H", time.localtime())),
-                         "minutes": int(time.strftime("%M", time.localtime())) + 13}
+    async with Database(DB_URL) as db:
+            
+        # функция ключа для таймера
+        async def clock():
+            times = {"hour": int(time.strftime("%H", time.localtime())),
+                     "minutes": int(time.strftime("%M", time.localtime())) + 13}
 
-                await db.hmset("timer", times)
+            await db.hmset("timer", times)
 
-            # создание дефолтного ключа для таймера
-            if "timer" not in await db.keys():
-                await clock()
+        # создание дефолтного ключа для таймера
+        if "timer" not in await db.keys():
+            await clock()
 
-            # цикл таймера
+        # функция с циклом таймера
+        async def timer():
             while True:
                 timerr = await db.hgetall("timer")
                 time_unit = datetime.time(int(timerr['hour']), int(timerr['minutes']))
                 time_now = datetime.time(int(time.strftime("%H", time.localtime())),
                                          int(time.strftime("%M", time.localtime())))
-
+    
                 if time_now >= time_unit:
                     if choice(tuple(range(1, 4))) == 1:
                         await machine_units(2000000002)
@@ -57,9 +58,9 @@ async def startup_function():
                                                 message="Да",
                                                 random_id=0)
                         await clock()
-
+    
                 await asyncio.sleep(1)
-
+        
     asyncio.create_task(timer())
 
 
@@ -83,4 +84,3 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
-    
