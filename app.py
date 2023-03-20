@@ -32,8 +32,8 @@ async def startup_function():
 
             # создание дефолтного ключа для таймера
             if "timer" not in await db.keys():
-                timer = {"hour": int(time.strftime("H%", time.localtime())) + 1,
-                         "minutes": time.strftime("M%", time.localtime())}
+                timer = {"hour": int(time.strftime("%H", time.localtime())) + 1,
+                         "minutes": time.strftime("%M", time.localtime())}
 
                 await db.hmset("timer", timer)
 
