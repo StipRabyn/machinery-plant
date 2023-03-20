@@ -30,6 +30,7 @@ async def startup_function():
     async def timer():
         while True:
             await schedule.run_pending()
+            await asyncio.sleep(1)
     
     asyncio.create_task(timer())
 
