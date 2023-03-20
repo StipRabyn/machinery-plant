@@ -1,7 +1,6 @@
 import time
 import datetime
 import asyncio
-import nest_asyncio
 from loguru import logger
 from vk_bot import bot
 from machines import machine_units
