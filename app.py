@@ -25,7 +25,6 @@ async def startup_function():
 
     # базированный таймер!
     schedule.every(30).seconds.do(machine_units)
-    nest_asyncio.apply()
 
     while True:
         await schedule.run_pending()
