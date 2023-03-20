@@ -27,10 +27,13 @@ async def startup_function():
     # базированный таймер!
     schedule.every(80).minutes.do(machine_units)
     nest_asyncio.apply()
-
-    while True:
-        asyncio.create_task(schedule.run_pending())
-        time.sleep(0.1)
+    
+    async def timer():
+        while True:
+            await schedule.run_pending()
+            time.sleep(0.1)
+    
+    asyncio.create_task(timer())
 
 
 # обработчик POST-запросов
