@@ -24,7 +24,7 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    schedule.every(120).minutes.do(machine_units)
+    schedule.every(90).minutes.do(machine_units)
 
     while True:
         await schedule.run_pending()
