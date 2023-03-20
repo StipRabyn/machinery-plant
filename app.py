@@ -32,8 +32,7 @@ async def startup_function():
     async def times():
         while True:
             await schedule.run_pending()
-
-    await asyncio.sleep(1)
+            await asyncio.sleep(1)
 
     asyncio.run(times())
     asyncio.set_event_loop(asyncio.new_event_loop())
