@@ -43,7 +43,7 @@ async def startup_function():
                 minutes += 13
 
             times = {"hour": hour,
-                     "minutes": minutes + 13}
+                     "minutes": minutes}
 
             await db.hmset("timer", times)
 
