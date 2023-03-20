@@ -23,7 +23,7 @@ async def startup_function():
 
     # базированный таймер!
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(machine_units(), "interval", seconds=5400)
+    scheduler.add_job(await machine_units(), "interval", seconds=30)
     scheduler.start()
 
 
