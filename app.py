@@ -29,11 +29,21 @@ async def startup_function():
 
     # базированный таймер!
     async with Database(DB_URL) as db:
-            
+
         # функция ключа для таймера
         async def clock():
-            times = {"hour": int(time.strftime("%H", time.localtime())),
-                     "minutes": int(time.strftime("%M", time.localtime())) + 13}
+            hour = int(time.strftime("%H", time.localtime()))
+            minutes = int(time.strftime("%M", time.localtime()))
+
+            if int(time.strftime("%M", time.localtime())) >= 47:
+                minutes_hour = hour * 60 + minutes + 13
+                hour = minutes_hour // 60
+                minutes = minutes_hour % 60
+            else:
+                minutes += 13
+
+            times = {"hour": hour,
+                     "minutes": minutes + 13}
 
             await db.hmset("timer", times)
 
@@ -48,7 +58,7 @@ async def startup_function():
                 time_unit = datetime.time(int(timerr['hour']), int(timerr['minutes']))
                 time_now = datetime.time(int(time.strftime("%H", time.localtime())),
                                          int(time.strftime("%M", time.localtime())))
-    
+
                 if time_now >= time_unit:
                     if choice(tuple(range(1, 4))) == 1:
                         await machine_units(2000000002)
@@ -58,9 +68,9 @@ async def startup_function():
                                                 message="Да",
                                                 random_id=0)
                         await clock()
-    
+
                 await asyncio.sleep(1)
-        
+
     asyncio.create_task(timer())
 
 
