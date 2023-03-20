@@ -71,7 +71,7 @@ async def startup_function():
 
                 await asyncio.sleep(1)
 
-    asyncio.create_task(timer())
+        asyncio.create_task(timer())
 
 
 # обработчик POST-запросов
