@@ -32,8 +32,8 @@ async def startup_function():
 
             # создание дефолтного ключа для таймера
             if "timer" not in await db.keys():
-                timer = {"hour": int(time.strftime("%H", time.localtime())),
-                         "minutes": int(time.strftime("%M", time.localtime())) + 1}
+                timer = {"hour": int(time.strftime("%H", time.localtime())) + 1,
+                         "minutes": int(time.strftime("%M", time.localtime()))}
 
                 await db.hmset("timer", timer)
 
@@ -46,6 +46,9 @@ async def startup_function():
                 
                 if time_now >= time_unit:
                     await machine_units()
+                    timer = {"hour": int(time.strftime("%H", time.localtime())) + 1,
+                             "minutes": int(time.strftime("%M", time.localtime()))}
+                    await db.hmset("timer", timer)
 
                 await asyncio.sleep(1)
 
