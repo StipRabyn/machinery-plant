@@ -1,5 +1,7 @@
 uvicorn==0.21.1
 fastapi==0.94.1
+nest-asyncio==1.5.6
+python-worker==2.1.1
 aioredis==2.0.1
 aioschedule==0.5.2
 vkbottle==4.3.12
