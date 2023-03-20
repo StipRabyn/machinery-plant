@@ -1,4 +1,5 @@
 import time
+import asyncio
 import nest_asyncio
 import aioschedule as schedule
 from loguru import logger
