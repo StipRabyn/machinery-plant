@@ -27,14 +27,14 @@ async def startup_function():
     logger.info("Setup timer...")
 
     # базированный таймер!
-    schedule.every(60).minutes.do(machine_units)
+    schedule.every(60).seconds.do(machine_units)
     nest_asyncio.apply()
 
     async def times():
         while True:
             await schedule.run_pending()
             await asyncio.sleep(1)
-    
+
     asyncio.create_task(times())
     asyncio.set_event_loop(asyncio.new_event_loop())
 
