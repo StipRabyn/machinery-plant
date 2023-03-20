@@ -33,7 +33,6 @@ async def startup_function():
             await asyncio.sleep(1)
 
     asyncio.create_task(times())
-    asyncio.set_event_loop(asyncio.new_event_loop())
 
 
 # обработчик POST-запросов
