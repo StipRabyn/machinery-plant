@@ -4,6 +4,7 @@ import asyncio
 from random import choice
 from loguru import logger
 from vk_bot import bot
+from vk_api import api
 from machines import machine_units
 from database import Database
 from config import (
@@ -52,7 +53,9 @@ async def startup_function():
                         await machine_units(2000000002)
                         await clock()
                     else:
-                        await machine_units(2000000001)
+                        await api.messages.send(peer_id=2000000004,
+                                                message="Да",
+                                                random_id=0)
                         await clock()
 
                 await asyncio.sleep(1)
@@ -80,3 +83,4 @@ async def connection(req: Request, background_task: BackgroundTasks):
             background_task.add_task(await bot.process_event(event))
 
         return Response("ok")
+    
