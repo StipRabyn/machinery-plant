@@ -1,4 +1,3 @@
-import time
 import asyncio
 import nest_asyncio
 import aioschedule as schedule
@@ -31,7 +30,6 @@ async def startup_function():
     async def timer():
         while True:
             await schedule.run_pending()
-            time.sleep(0.1)
     
     asyncio.create_task(timer())
 
