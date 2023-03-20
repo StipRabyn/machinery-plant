@@ -7,10 +7,10 @@ from config import (
     hashes)
 
 
-async def machine_units():
+async def machine_units(peer_id):
     # функция отправки сгенерированного юнита
     async def send_unit(emoji, type_unit, unit):
-        await api.messages.send(peer_id=2000000002,
+        await api.messages.send(peer_id=peer_id,
                                 message=f"{emoji} Произведена единица {type_unit}: {unit}",
                                 random_id=0)
 
