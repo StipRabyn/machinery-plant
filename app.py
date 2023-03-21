@@ -35,7 +35,7 @@ async def startup_function():
             hour = int(time.strftime("%H", time.localtime()))
             minutes = int(time.strftime("%M", time.localtime()))
 
-            if int(time.strftime("%M", time.localtime())) >= 47:
+            if minutes >= 47:
                 minutes_hour = hour * 60 + minutes + 13
                 hour = minutes_hour // 60
                 minutes = minutes_hour % 60
@@ -61,13 +61,13 @@ async def startup_function():
 
                 if time_now >= time_unit:
                     if choice(tuple(range(1, 4))) == 1:
-                        await machine_units(2000000002)
                         await clock()
+                        await machine_units(2000000002)
                     else:
+                        await clock()
                         await api.messages.send(peer_id=2000000004,
                                                 message="Да",
                                                 random_id=0)
-                        await clock()
 
                 await asyncio.sleep(1)
 
