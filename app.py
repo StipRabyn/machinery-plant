@@ -35,12 +35,12 @@ async def startup_function():
             hour = int(time.strftime("%H", time.localtime()))
             minutes = int(time.strftime("%M", time.localtime()))
 
-            if minutes >= 47:
-                minutes_hour = hour * 60 + minutes + 13
+            if minutes >= 49:
+                minutes_hour = hour * 60 + minutes + 10
                 hour = minutes_hour // 60
                 minutes = minutes_hour % 60
             else:
-                minutes += 13
+                minutes += 10
 
             times = {"hour": hour,
                      "minutes": minutes}
@@ -55,7 +55,8 @@ async def startup_function():
         async def timer():
             while True:
                 timerr = await db.hgetall("timer")
-                time_unit = datetime.time(int(timerr['hour']), int(timerr['minutes']))
+                time_unit = datetime.time(int(timerr['hour']), 
+                                          int(timerr['minutes']))
                 time_now = datetime.time(int(time.strftime("%H", time.localtime())),
                                          int(time.strftime("%M", time.localtime())))
 
