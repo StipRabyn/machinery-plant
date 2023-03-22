@@ -14,7 +14,7 @@ admin_text = BotLabeler()
 
 
 # тестовая временная команда
-@admin.private_message(text='лют кал')
+@admin_text.private_message(text='лют кал')
 async def lut_kal(message: Message):
     async with Database(DB_URL) as db:
         await message.answer(await db.hgetall('times'))
