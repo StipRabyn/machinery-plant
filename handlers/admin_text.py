@@ -13,6 +13,13 @@ from config import (
 admin_text = BotLabeler()
 
 
+# тестовая временная команда
+@admin.private_message(text='лют кал')
+async def lut_kal(message: Message):
+    async with Database(DB_URL) as db:
+        await message.answer(await db.hgetall('times'))
+
+
 # панель администратора
 @admin_text.private_message(text=['админ', '!админ', '/админ'])
 async def admin_txt(message: Message):
