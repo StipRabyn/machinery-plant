@@ -32,6 +32,8 @@ async def startup_function():
 
         # функция ключа для таймера
         async def clock():
+            if await db.exists("timer"):
+                await db.delete("timer")  
             hour = int(time.strftime("%H", time.localtime()))
             minutes = int(time.strftime("%M", time.localtime()))
 
@@ -46,10 +48,6 @@ async def startup_function():
                      "minutes": minutes}
 
             await db.hmset("timer", times)
-
-        # создание дефолтного ключа для таймера
-        if "timer" not in await db.keys():
-            await clock()
 
         # функция с циклом таймера
         async def timer():
