@@ -3,7 +3,7 @@ import datetime
 import asyncio
 from random import choice
 from loguru import logger
-from vk_bot import bot
+from vk_bot import bot 
 from vk_api import api
 from machines import machine_units
 from database import Database
