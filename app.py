@@ -31,10 +31,7 @@ async def startup_function():
     async with Database(DB_URL) as db:
 
         # функция ключа для таймера
-        async def clock():
-            if await db.exists("timer"):
-                await db.delete("timer")  
-
+        async def clock():  
             hour = int(time.strftime("%H", time.localtime()))
             minutes = int(time.strftime("%M", time.localtime()))
 
@@ -53,6 +50,13 @@ async def startup_function():
         # функция с циклом таймера
         async def timer():
             while True:
+                if await db.exists("timer"):
+                    hash_unit = await db.hgetall("timer")
+                    await db.delete("timer")
+                    await db.hmset("timer", hash_unit)
+                else:
+                    await clock()
+
                 timerr = await db.hgetall("timer")
                 time_unit = datetime.time(int(timerr['hour']), 
                                           int(timerr['minutes']))
