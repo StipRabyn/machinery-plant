@@ -33,7 +33,7 @@ async def startup_function():
         # функция ключа для таймера
         async def clock():
             if await db.exists("timer"):
-                await db.delete("timer")  
+                await db.del("timer")  
 
             hour = int(time.strftime("%H", time.localtime()))
             minutes = int(time.strftime("%M", time.localtime()))
