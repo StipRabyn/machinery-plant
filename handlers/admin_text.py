@@ -16,8 +16,12 @@ admin_text = BotLabeler()
 # тестовая временная команда
 @admin_text.private_message(text=['лют кал'])
 async def lut_kal(message: Message):
-    async with Database(DB_URL) as db:
-        await message.answer(await db.hgetall('timer'))
+    if message.from_id in ADMIN:
+        async with Database(DB_URL) as db:
+            await message.answer(await db.hgetall('timer'))
+            await db.delete("timer")
+    else:
+        await message.answer("⚠ Вы не являетесь администратором концерна!")
 
 
 # панель администратора
