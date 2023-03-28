@@ -64,7 +64,8 @@ async def startup_function():
                                          int(time.strftime("%M", time.localtime())))
 
                 if time_now >= time_unit:
-                    if choice(tuple(range(1, 3))) == 1:
+                    random_number = choice(tuple(range(1, 4)))
+                    if random_number == 1 or random_number == 2:
                         await clock()
                         await machine_units(2000000002)
                     else:
